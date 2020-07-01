@@ -1,0 +1,34 @@
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import org.junit.Test;
+
+public class Challenge3 {
+
+    @Test
+    public void readValueFromObjectTest() {
+        String object = "{\"a\": {\"b\": {\"c\": \"d\"}}}";
+        Gson gson = new Gson();
+        JsonObject jsonObject = gson.fromJson(object, JsonObject.class);
+
+        JsonElement aValue = findValue("a", jsonObject);
+
+        JsonElement bValue = findValue("b", aValue.getAsJsonObject());
+
+        JsonElement cValue = findValue("c", bValue.getAsJsonObject());
+    }
+
+    private JsonElement findValue(String key, JsonObject jsonObject) {
+        JsonElement jsonElement = jsonObject.get(key);
+        System.out.println(String.format("Key: %s and it Value %s ", key, jsonElement));
+        return jsonElement;
+    }
+}
+
+
+
+
+output
+Key: a and it Value {"b":{"c":"d"}} 
+Key: b and it Value {"c":"d"} 
+Key: c and it Value "d" 
